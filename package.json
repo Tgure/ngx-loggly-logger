@@ -1,6 +1,6 @@
 {
   "name": "angular2-loggly-logger",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Angular2 Service for logging to Loggly",
   "scripts": {},
   "contributors": [],
