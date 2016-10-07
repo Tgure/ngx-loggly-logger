@@ -1,0 +1,189 @@
+import {Injectable} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
+import {Cookie} from 'ng2-cookies/ng2-cookies';
+
+@Injectable()
+export class LogglyService {
+    private LOGGLY_INPUT_PREFIX:any;
+    private LOGGLY_COLLECTOR_DOMAIN:any;
+    private LOGGLY_SESSION_KEY:any;
+    private LOGGLY_SESSION_KEY_LENGTH:any;
+    private LOGGLY_PROXY_DOMAIN:any;
+    private key:boolean;
+    private sendConsoleErrors:boolean;
+    private tag:string;
+    private useDomainProxy:boolean;
+    private session_id:any;
+    private inputUrl:any;
+
+    constructor(private _http:Http) {
+        this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
+        this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
+        this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
+        this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
+        this.LOGGLY_PROXY_DOMAIN = 'loggly';
+    }
+
+    uuid() {
+        // lifted from here -> http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    setKey(tracker, key) {
+        tracker.key = key;
+        tracker.setSession();
+        this.setInputUrl(tracker);
+    }
+
+    setTag(tracker, tag) {
+        tracker.tag = tag;
+    }
+
+    setDomainProxy(tracker, useDomainProxy) {
+        tracker.useDomainProxy = useDomainProxy;
+        //refresh inputUrl value
+        this.setInputUrl(tracker);
+    }
+
+    setSendConsoleError(tracker, sendConsoleErrors) {
+        tracker.sendConsoleErrors = sendConsoleErrors;
+
+        if (tracker.sendConsoleErrors === true) {
+            var _onerror = window.onerror;
+            //send console error messages to Loggly
+            window.onerror = function (msg, url, line, col) {
+                tracker.push({
+                    category: 'BrowserJsException',
+                    exception: {
+                        message: msg,
+                        url: url,
+                        lineno: line,
+                        colno: col,
+                    }
+                });
+
+                if (_onerror && typeof _onerror === 'function') {
+                    _onerror.apply(window, arguments);
+                }
+            };
+        }
+    }
+
+    setInputUrl(tracker) {
+        if (tracker.useDomainProxy == true) {
+            tracker.inputUrl = this.LOGGLY_INPUT_PREFIX
+                + window.location.host
+                + '/'
+                + this.LOGGLY_PROXY_DOMAIN
+                + '/inputs/'
+                + tracker.key
+                + '/tag/'
+                + tracker.tag;
+        }
+        else {
+            tracker.inputUrl = this.LOGGLY_INPUT_PREFIX
+                + (tracker.logglyCollectorDomain || this.LOGGLY_COLLECTOR_DOMAIN)
+                + '/inputs/'
+                + tracker.key
+                + '/tag/'
+                + tracker.tag;
+        }
+    }
+
+    setSession(session_id) {
+        if (session_id) {
+            this.session_id = session_id;
+            this.setCookie(this.session_id);
+        } else if (!this.session_id) {
+            this.session_id = this.readCookie();
+            if (!this.session_id) {
+                this.session_id = this.uuid();
+                this.setCookie(this.session_id);
+            }
+        }
+    }
+
+    push(data) {
+        var type = typeof data;
+
+        if (!data || !(type === 'object' || type === 'string')) {
+            return;
+        }
+
+        var self:any = this;
+
+
+        if (type === 'string') {
+            data = {
+                'text': data
+            };
+        } else {
+            if (data.logglyCollectorDomain) {
+                self.logglyCollectorDomain = data.logglyCollectorDomain;
+                return;
+            }
+
+            if (data.sendConsoleErrors !== undefined) {
+                this.setSendConsoleError(self, data.sendConsoleErrors);
+            }
+
+            if (data.tag) {
+                LogglyService.setTag(self, data.tag);
+            }
+
+            if (data.useDomainProxy) {
+                this.setDomainProxy(self, data.useDomainProxy);
+            }
+
+            if (data.logglyKey) {
+                this.setKey(self, data.logglyKey);
+                return;
+            }
+
+            if (data.session_id) {
+                self.setSession(data.session_id);
+                return;
+            }
+        }
+
+        if (!self.key) {
+            return;
+        }
+
+        self.track(data).subscribe(
+            response => {
+                // Success
+            },
+            error => {
+                console.error(error);
+            });
+    }
+
+    track(data) {
+        // inject session id
+        data.sessionId = this.session_id;
+        let headers = new Headers({'Content-Type': 'text/plain'});
+        let options = new RequestOptions({headers: headers});
+        return this._http.post(this.inputUrl, data, options)
+            .map(res => res);
+    }
+
+    readCookie():any {
+        var cookie = Cookie.get(this.LOGGLY_SESSION_KEY),
+            i = cookie.indexOf(this.LOGGLY_SESSION_KEY);
+        if (i < 0) {
+            return false;
+        } else {
+            var end = cookie.indexOf(';', i + 1);
+            end = end < 0 ? cookie.length : end;
+            return cookie.slice(i + this.LOGGLY_SESSION_KEY_LENGTH, end);
+        }
+    }
+
+    setCookie(value) {
+        Cookie.set(this.LOGGLY_SESSION_KEY, value);
+    }
+}
