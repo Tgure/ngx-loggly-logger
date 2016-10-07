@@ -32,6 +32,13 @@ export class LogglyService {
         });
     }
 
+    LogglyTracker() {
+        this.key = false;
+        this.sendConsoleErrors = false;
+        this.tag = 'jslogger';
+        this.useDomainProxy = false;
+    }
+
     setKey(tracker, key) {
         tracker.key = key;
         tracker.setSession();
