@@ -32,13 +32,6 @@ export class LogglyService {
         });
     }
 
-    LogglyTracker() {
-        this.key = false;
-        this.sendConsoleErrors = false;
-        this.tag = 'jslogger';
-        this.useDomainProxy = false;
-    }
-
     setKey(tracker, key) {
         tracker.key = key;
         tracker.setSession();
@@ -138,7 +131,7 @@ export class LogglyService {
             }
 
             if (data.tag) {
-                LogglyService.setTag(self, data.tag);
+                this.setTag(self, data.tag);
             }
 
             if (data.useDomainProxy) {
