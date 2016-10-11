@@ -172,14 +172,18 @@ export class LogglyService {
     }
 
     readCookie():any {
-        var cookie = Cookie.get(this.LOGGLY_SESSION_KEY),
-            i = cookie.indexOf(this.LOGGLY_SESSION_KEY);
-        if (i < 0) {
-            return false;
+        var cookie = Cookie.get(this.LOGGLY_SESSION_KEY);
+        if (cookie) {
+            var i = cookie.indexOf(this.LOGGLY_SESSION_KEY);
+            if (i < 0) {
+                return false;
+            } else {
+                var end = cookie.indexOf(';', i + 1);
+                end = end < 0 ? cookie.length : end;
+                return cookie.slice(i + this.LOGGLY_SESSION_KEY_LENGTH, end);
+            }
         } else {
-            var end = cookie.indexOf(';', i + 1);
-            end = end < 0 ? cookie.length : end;
-            return cookie.slice(i + this.LOGGLY_SESSION_KEY_LENGTH, end);
+            return false;
         }
     }
 
