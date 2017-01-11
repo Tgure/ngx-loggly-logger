@@ -5,19 +5,19 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LogglyService {
-    private LOGGLY_INPUT_PREFIX:any;
-    private LOGGLY_COLLECTOR_DOMAIN:any;
-    private LOGGLY_SESSION_KEY:any;
-    private LOGGLY_SESSION_KEY_LENGTH:any;
-    private LOGGLY_PROXY_DOMAIN:any;
-    private key:boolean;
-    private sendConsoleErrors:boolean;
-    private tag:string;
-    private useDomainProxy:boolean;
-    private session_id:any;
-    private inputUrl:any;
+    private LOGGLY_INPUT_PREFIX: any;
+    private LOGGLY_COLLECTOR_DOMAIN: any;
+    private LOGGLY_SESSION_KEY: any;
+    private LOGGLY_SESSION_KEY_LENGTH: any;
+    private LOGGLY_PROXY_DOMAIN: any;
+    private key: boolean;
+    private sendConsoleErrors: boolean;
+    private tag: string;
+    private useDomainProxy: boolean;
+    private session_id: any;
+    private inputUrl: any;
 
-    constructor(private _http:Http) {
+    constructor(private _http: Http) {
         this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
         this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
         this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
@@ -33,23 +33,23 @@ export class LogglyService {
         });
     }
 
-    setKey(tracker, key) {
+    setKey(tracker: any, key: any) {
         tracker.key = key;
         tracker.setSession();
         this.setInputUrl(tracker);
     }
 
-    setTag(tracker, tag) {
+    setTag(tracker: any, tag: any) {
         tracker.tag = tag;
     }
 
-    setDomainProxy(tracker, useDomainProxy) {
+    setDomainProxy(tracker: any, useDomainProxy: any) {
         tracker.useDomainProxy = useDomainProxy;
         //refresh inputUrl value
         this.setInputUrl(tracker);
     }
 
-    setSendConsoleError(tracker, sendConsoleErrors) {
+    setSendConsoleError(tracker: any, sendConsoleErrors: any) {
         tracker.sendConsoleErrors = sendConsoleErrors;
 
         if (tracker.sendConsoleErrors === true) {
@@ -73,7 +73,7 @@ export class LogglyService {
         }
     }
 
-    setInputUrl(tracker) {
+    setInputUrl(tracker: any) {
         if (tracker.useDomainProxy == true) {
             tracker.inputUrl = this.LOGGLY_INPUT_PREFIX
                 + window.location.host
@@ -94,7 +94,7 @@ export class LogglyService {
         }
     }
 
-    setSession(session_id) {
+    setSession(session_id: any) {
         if (session_id) {
             this.session_id = session_id;
             this.setCookie(this.session_id);
@@ -107,14 +107,14 @@ export class LogglyService {
         }
     }
 
-    push(data) {
+    push(data: any) {
         var type = typeof data;
 
         if (!data || !(type === 'object' || type === 'string')) {
             return;
         }
 
-        var self:any = this;
+        var self: any = this;
 
 
         if (type === 'string') {
@@ -155,15 +155,15 @@ export class LogglyService {
         }
 
         self.track(data).subscribe(
-            response => {
+            (response: any) => {
                 // Success
             },
-            error => {
+            (error: any) => {
                 console.error(error);
             });
     }
 
-    track(data) {
+    track(data: any) {
         // inject session id
         data.sessionId = this.session_id;
         let headers = new Headers({'Content-Type': 'text/plain'});
@@ -172,7 +172,7 @@ export class LogglyService {
             .map(res => res);
     }
 
-    readCookie():any {
+    readCookie(): any {
         var cookie = Cookie.get(this.LOGGLY_SESSION_KEY);
         if (cookie) {
             var i = cookie.indexOf(this.LOGGLY_SESSION_KEY);
@@ -188,7 +188,7 @@ export class LogglyService {
         }
     }
 
-    setCookie(value) {
+    setCookie(value: any) {
         Cookie.set(this.LOGGLY_SESSION_KEY, value);
     }
 }
