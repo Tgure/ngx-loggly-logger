@@ -1,19 +1,26 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es5",
-    "outDir": "dist",
-    "rootDir": ".",
-    "sourceMap": true,
+    "target": "ES5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-     "types": [
-       "core-js",
-       "node"
-     ]
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
+  "files": [
+    "index.ts"
+  ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+    "dist",
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
 }
