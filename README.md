@@ -13,7 +13,7 @@ To install follow this procedure:
     import { NgModule } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
     import { MyTestApp } from './my-test-app';
-    import { NgxLogglyModule } from 'ngx-loggly-logger';
+    import { LogglyService } from 'ngx-loggly-logger';
 
     @NgModule({
         providers:    [ LogglyService ],
