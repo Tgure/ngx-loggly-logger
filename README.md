@@ -1,19 +1,19 @@
-# angular2-loggly-logger
+# ngx-loggly-logger
 
 ## Description
-Simple library to log to loggly in Angular2
+Simple library to log to loggly in Angular
 
 ## Installation
 
 To install follow this procedure:
 
-1. __npm install angular2-loggly-logger --save__
+1. __npm install ngx-loggly-logger --save__
 2. Add __LogglyService__ import to your __@NgModule__ like example below
     ```js
     import { NgModule } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
     import { MyTestApp } from './my-test-app';
-    import { LogglyService } from 'angular2-loggly-logger';
+    import { NgxLogglyModule } from 'ngx-loggly-logger';
 
     @NgModule({
         providers:    [ LogglyService ],
@@ -25,7 +25,7 @@ To install follow this procedure:
     ```
 3. Use the following in your components, etc.
     ```js
-    import {LogglyService} from 'angular2-loggly-logger';
+    import {LogglyService} from 'ngx-loggly-logger';
     
     constructor(private _logglyService:LogglyService) {
         }

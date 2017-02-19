@@ -1,53 +1,51 @@
 {
-  "name": "angular2-loggly-logger",
-  "version": "0.0.10",
-  "description": "Angular2 Service for logging to Loggly",
-  "scripts": {},
-  "contributors": [],
-  "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^6.0.38",
-    "angular2-template-loader": "^0.6.0",
-    "awesome-typescript-loader": "~3.0.0-beta.17",
-    "css-loader": "^0.26.0",
-    "raw-loader": "^0.5.1",
-    "to-string-loader": "^1.1.4",
-    "typescript": "^2.0.10",
-    "webpack": "2.2.0-rc.3",
-    "webpack-dev-server": "2.2.0-rc.0",
-    "webpack-merge": "~2.3.1"
+  "name": "ngx-loggly-logger",
+  "version": "0.0.19",
+  "scripts": {
+    "build": "ngc -p tsconfig.json",
+    "lint": "tslint src/**/*.ts",
+    "test": "tsc && karma start",
+    "prepublish": "tsc",
+    "tsc": "tsc"
   },
-  "dependencies": {
-    "@angular/common": "~2.4.1",
-    "@angular/compiler": "~2.4.1",
-    "@angular/core": "~2.4.1",
-    "@angular/forms": "~2.4.1",
-    "@angular/http": "~2.4.1",
-    "@angular/platform-browser": "~2.4.1",
-    "@angular/platform-browser-dynamic": "~2.4.1",
-    "@angular/platform-server": "~2.4.1",
-    "@angular/router": "~3.4.1",
-    "@angular/upgrade": "~2.4.1",
-    "core-js": "^2.4.1",
-    "ie-shim": "^0.1.0",
-    "ng2-cookies": "^1.0.4",
-    "reflect-metadata": "^0.1.9",
-    "rxjs": "~5.0.2",
-    "zone.js": "~0.7.4"
-  },
-  "keywords": [
-    "Angular2",
-    "angular2-loggly",
-    "ng2-loggly",
-    "angular2-loggly-logger",
-    "ng2-loggly-logger"
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tgure/angular2-loggly-logger.git"
+    "url": "https://github.com/Tgure/ngx-loggly-logger"
   },
+  "author": {
+    "name": "Aaron Newman",
+    "email": "aftermathinc@gmail.com"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tgure/angular2-loggly-logger/issues"
+    "url": "https://github.com/Tgure/ngx-loggly-logger/issues"
   },
-  "homepage": "https://github.com/Tgure/angular2-loggly-logger#readme"
+  "main": "./dist/index.js",
+  "dependencies": {
+    "ng2-cookies": "~1.0.4"
+  },
+  "devDependencies": {
+    "@angular/common": "~2.4.8",
+    "@angular/http": "~2.4.1",
+    "@angular/platform-browser": "~2.4.1",
+    "@angular/compiler": "~2.4.5",
+    "@angular/compiler-cli": "~2.4.5",
+    "@angular/core": "~2.4.8",
+    "@angular/platform-server": "~2.4.5",
+    "codelyzer": "~2.0.0",
+    "rxjs": "~5.1.1",
+    "tslint": "~4.4.2",
+    "typescript": "~2.1.6",
+    "zone.js": "~0.7.7",
+    "@types/es6-shim": "~0.31.32",
+    "@types/protractor": "~4.0.0",
+    "@types/jasmine": "~2.5.40",
+    "@types/selenium-webdriver": "~2.53.39"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
 }
