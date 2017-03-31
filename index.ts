@@ -1,21 +1,21 @@
-import {NgModule, ModuleWithProviders} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {HttpModule} from '@angular/http';
 import {LogglyService} from './src/loggly.service';
 
-export * from './src/loggly.service';
-
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [],
-  exports: []
+    imports: [
+        CommonModule,
+        HttpModule
+    ],
+    declarations: [],
+    exports: []
 })
 export class NgxLogglyModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: NgxLogglyModule,
-      providers: [LogglyService]
-    };
-  }
+    static forRoot(): ModuleWithProviders{
+        return {
+            ngModule: NgxLogglyModule,
+            providers: [LogglyService]
+        };
+    }
 }

@@ -5,6 +5,8 @@ Simple library to log to loggly in Angular
 
 ## Installation
 
+Version 4.0 has only been tested with angular cli and angular 4, if it does not work for you try version 0.0.21
+
 To install follow this procedure:
 
 1. __npm install ngx-loggly-logger --save__
@@ -13,11 +15,11 @@ To install follow this procedure:
     import { NgModule } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
     import { MyTestApp } from './my-test-app';
-    import { LogglyService } from 'ngx-loggly-logger';
+    import { NgxLogglyModule } from 'ngx-loggly-logger';
 
     @NgModule({
-        providers:    [ LogglyService ],
-        imports:      [ BrowserModule ],
+        providers:    [ ],
+        imports:      [ BrowserModule, NgxLogglyModule ],
         declarations: [ MyTestApp ],
         bootstrap:    [ MyTestApp ]
     })
@@ -25,7 +27,8 @@ To install follow this procedure:
     ```
 3. Use the following in your components, etc.
     ```js
-    import {LogglyService} from 'ngx-loggly-logger';
+    
+    import { LogglyService } from 'ngx-loggly-logger/dist/src/loggly.service';
     
     constructor(private _logglyService:LogglyService) {
         }
