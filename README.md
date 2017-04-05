@@ -19,7 +19,7 @@ To install follow this procedure:
 
     @NgModule({
         providers:    [ ],
-        imports:      [ BrowserModule, NgxLogglyModule ],
+        imports:      [ BrowserModule, NgxLogglyModule.forRoot() ],
         declarations: [ MyTestApp ],
         bootstrap:    [ MyTestApp ]
     })

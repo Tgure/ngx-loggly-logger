@@ -1,6 +1,6 @@
 {
   "name": "ngx-loggly-logger",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "scripts": {
     "build": "ngc -p tsconfig.json",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
