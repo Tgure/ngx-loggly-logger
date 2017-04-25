@@ -1,28 +1,28 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Cookie} from 'ng2-cookies';
 
 @Injectable()
 export class LogglyService {
-    private LOGGLY_INPUT_PREFIX: any;
-    private LOGGLY_COLLECTOR_DOMAIN: any;
-    private LOGGLY_SESSION_KEY: any;
-    private LOGGLY_SESSION_KEY_LENGTH: any;
-    private LOGGLY_PROXY_DOMAIN: any;
-    private session_id: any;
-    private inputUrl: any;
+  private LOGGLY_INPUT_PREFIX: any;
+  private LOGGLY_COLLECTOR_DOMAIN: any;
+  private LOGGLY_SESSION_KEY: any;
+  private LOGGLY_SESSION_KEY_LENGTH: any;
+  private LOGGLY_PROXY_DOMAIN: any;
+  private session_id: any;
+  private inputUrl: any;
 
-    constructor(private _http: Http){
-        this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
-        this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
-        this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
-        this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
-        this.LOGGLY_PROXY_DOMAIN = 'loggly';
-    }
+  constructor(private _http: Http) {
+      this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
+      this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
+      this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
+      this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
+      this.LOGGLY_PROXY_DOMAIN = 'loggly';
+  }
 
-    uuid(){
+    uuid() {
         // lifted from here -> http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c){
             let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -30,23 +30,23 @@ export class LogglyService {
         });
     }
 
-    setKey(tracker: any, key: any){
+    setKey(tracker: any, key: any) {
         tracker.key = key;
         tracker.setSession();
         this.setInputUrl(tracker);
     }
 
-    setTag(tracker: any, tag: any){
+    setTag(tracker: any, tag: any) {
         tracker.tag = tag;
     }
 
-    setDomainProxy(tracker: any, useDomainProxy: any){
+    setDomainProxy(tracker: any, useDomainProxy: any) {
         tracker.useDomainProxy = useDomainProxy;
         // refresh inputUrl value
         this.setInputUrl(tracker);
     }
 
-    setSendConsoleError(tracker: any, sendConsoleErrors: any){
+    setSendConsoleError(tracker: any, sendConsoleErrors: any) {
         tracker.sendConsoleErrors = sendConsoleErrors;
 
         if (tracker.sendConsoleErrors === true) {
@@ -70,7 +70,7 @@ export class LogglyService {
         }
     }
 
-    setInputUrl(tracker: any){
+    setInputUrl(tracker: any) {
         if (tracker.useDomainProxy === true) {
             tracker.inputUrl = this.LOGGLY_INPUT_PREFIX
                 + window.location.host
@@ -90,7 +90,7 @@ export class LogglyService {
         }
     }
 
-    setSession(session_id: any){
+    setSession(session_id: any) {
         if (session_id) {
             this.session_id = session_id;
             this.setCookie(this.session_id);
@@ -103,7 +103,7 @@ export class LogglyService {
         }
     }
 
-    push(data: any){
+    push(data: any) {
         let type = typeof data;
 
         if (!data || !(type === 'object' || type === 'string')) {
@@ -151,15 +151,15 @@ export class LogglyService {
         }
 
         self.track(data).subscribe(
-            (response: any) =>{
+            (response: any) => {
                 // Success
             },
-            (error: any) =>{
+            (error: any) => {
                 console.error(error);
             });
     }
 
-    track(data: any){
+    track(data: any) {
         // inject session id
         data.sessionId = this.session_id;
         let headers = new Headers({'Content-Type': 'text/plain'});
@@ -168,7 +168,7 @@ export class LogglyService {
             .map(res => res);
     }
 
-    readCookie(): any{
+    readCookie(): any {
         let cookie = Cookie.get(this.LOGGLY_SESSION_KEY);
         if (cookie) {
             let i = cookie.indexOf(this.LOGGLY_SESSION_KEY);
@@ -184,7 +184,7 @@ export class LogglyService {
         }
     }
 
-    setCookie(value: any){
+    setCookie(value: any) {
         Cookie.set(this.LOGGLY_SESSION_KEY, value);
     }
 }

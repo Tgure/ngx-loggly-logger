@@ -1,0 +1,30 @@
+{
+  "name": "ngx-loggly-logger",
+  "version": "4.0.6",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tgure/ngx-loggly-logger"
+  },
+  "author": {
+    "name": "Aaron Newman",
+    "email": "aftermathinc@gmail.com"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tgure/ngx-loggly-logger/issues"
+  },
+  "module": "ngx-loggly-logger.js",
+  "typings": "ngx-loggly-logger.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "dependencies": {
+    "@angular/http": "^4.0.3",
+    "ng2-cookies": "^1.0.11"
+  }
+}
