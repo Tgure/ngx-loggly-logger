@@ -1,6 +1,6 @@
 {
   "name": "ngx-loggly-logger",
-  "version": "4.0.6",
+  "version": "5.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/tgure/ngx-loggly-logger"

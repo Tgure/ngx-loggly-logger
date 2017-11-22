@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {Cookie} from 'ng2-cookies';
+import { Cookie } from 'ng2-cookies';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class LogglyService {
@@ -14,7 +14,7 @@ export class LogglyService {
   private session_id: any;
   private inputUrl: any;
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
       this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
       this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
       this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
@@ -24,7 +24,7 @@ export class LogglyService {
 
     uuid() {
         // lifted from here -> http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c){
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
@@ -52,7 +52,7 @@ export class LogglyService {
         if (tracker.sendConsoleErrors === true) {
             let _onerror = window.onerror;
             // send console error messages to Loggly
-            window.onerror = function (msg, url, line, col){
+            window.onerror = function (msg, url, line, col) {
                 tracker.push({
                     category: 'BrowserJsException',
                     exception: {
@@ -162,9 +162,7 @@ export class LogglyService {
     track(data: any) {
         // inject session id
         data.sessionId = this.session_id;
-        let headers = new Headers({'Content-Type': 'text/plain'});
-        let options = new RequestOptions({headers: headers});
-        return this._http.post(this.inputUrl, data, options)
+        return this._http.post(this.inputUrl, data, { headers: new HttpHeaders().set('Content-Type', 'text/plain') })
             .map(res => res);
     }
 

@@ -5,7 +5,7 @@ Simple library to log to loggly in Angular
 
 ## Installation
 
-Version 4.x is for angular 4, if you are on earlier versions of angular try version 0.0.21
+Version 5.x is for angular 5, 4.x is for angular 4, if you are on earlier versions of angular try version 0.0.21
 
 To install follow this procedure:
 
@@ -35,9 +35,9 @@ To install follow this procedure:
 
     // Init to set key and tag and sendConsoleErrors boolean
     this._logglyService.push({
-        'logglyKey': 'Your Loggly Key goes here',
-        'sendConsoleErrors' : true, // Optional set true to send uncaught console errors
-        'tag' : 'loggly-logger'
+        logglyKey: 'Your Loggly Key goes here',
+        sendConsoleErrors : true, // Optional set true to send uncaught console errors
+        tag : 'loggly-logger'
     });
 
 
