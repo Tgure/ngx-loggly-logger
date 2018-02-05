@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import { Cookie } from 'ng2-cookies';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Cookie } from 'ng2-cookies/src/cookie';
 
 @Injectable()
 export class LogglyService {
@@ -162,8 +161,7 @@ export class LogglyService {
     track(data: any) {
         // inject session id
         data.sessionId = this.session_id;
-        return this._http.post(this.inputUrl, data, { headers: new HttpHeaders().set('Content-Type', 'text/plain') })
-            .map(res => res);
+        return this._http.post<any>(this.inputUrl, data, { headers: new HttpHeaders().set('Content-Type', 'text/plain') });
     }
 
     readCookie(): any {
