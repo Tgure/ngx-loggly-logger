@@ -1,4 +1,4 @@
-# ngx-loggly-logger
+# ngx-loggly-logger [![Build Status](https://travis-ci.org/Tgure/ngx-loggly-logger.svg?branch=master)](https://travis-ci.org/Tgure/ngx-loggly-logger)
 
 ## Description
 Simple library to log to loggly in Angular
