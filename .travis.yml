@@ -16,9 +16,12 @@ notifications:
     on_start: never
     on_cancel: never
     on_error: never
+before_deploy:
+  - cd dist
 deploy:
   provider: npm
   email: aftermathinc@gmail.com
+  skip_cleanup: true
   api_key:
     secure: QMV9hvMqM6S9H7KvhiPpcQLAZmMfAjYb/oxA7Fe+BVWZwSzZ/z8wtcfYs73bWFVn/As27S+FdpxZdRytVEGelC57zWhM8aHvfFg/yZzVjkITXFAmNBOulxIJ6YxzoUf32K3XPqkupfYk98w8FCBJt6Cy93Mxd3PHEu2ZOBZghuc5fYNZhEWWNO8kkHkkNsyxQUAuprGqFiKMLT9zrxartqi/t4QrHexg/qBuDPe9bhKkY5C/xaht+ADOTjvgKHWP+FhiHBTgEhCfdJjlD3y1lmxBA1heeewiTJJ6WM/8Jx403fSJNj7n16pLRiMG5Hfo+7vjjT5yAnYzOBhQQUzTQjkEAwtXSnAqS7SkjZ7Bug0+kwWqvfa9+3V2HreQkjae5jxSkXFk6QkYbBy0ujJS93TppI2ayMrmFd72GTn8mhTfZupadjucwnL7+0hAWGVIvLUfV1tkK7Xg+Z+W2VwpFdokd6p/9aB/85q5SQgQ5LV188AuZQdAEaweT9BckHGfsvRVIo02Lh87vBdzRTp457pCRti1LVrKHLNq+TtlZePJ6wXob/D/yBbvnertogE07OraVHx+70bneEXStaUJfxz9YnQyG/c3ywP/gJz6NRLpLH3sKP5VS8HfAsnbpHTJ2wuOyPis7L99HiPND142wiwHOFcM0PV8SIggUj3b/ro=
   on:
