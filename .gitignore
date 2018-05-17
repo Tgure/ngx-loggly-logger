@@ -30,3 +30,9 @@ Desktop.ini
 
 # Build files
 dist/*
+
+# ng_pkg
+.ng_pkg_build
+
+#tgz
+*.tgz

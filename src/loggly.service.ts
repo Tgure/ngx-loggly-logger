@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Cookie } from 'ng2-cookies/src/cookie';
+import { Cookie } from 'ng2-cookies';
 
 @Injectable()
 export class LogglyService {
