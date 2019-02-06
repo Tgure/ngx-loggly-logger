@@ -32,7 +32,10 @@ To install follow this procedure:
 
     constructor(private _logglyService:LogglyService) {
         }
-
+     
+    // Optionally you can pass in a protocol you would like to use, by default it will use whatever is returned by document.location.protocol
+    this.setProtocol('https://');   
+ 
     // Init to set key and tag and sendConsoleErrors boolean
     this._logglyService.push({
         logglyKey: 'Your Loggly Key goes here',

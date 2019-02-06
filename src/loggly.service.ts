@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Cookie } from 'ng2-cookies';
 
 @Injectable()
 export class LogglyService {
-  private LOGGLY_INPUT_PREFIX: any;
-  private LOGGLY_COLLECTOR_DOMAIN: any;
-  private LOGGLY_SESSION_KEY: any;
-  private LOGGLY_SESSION_KEY_LENGTH: any;
-  private LOGGLY_PROXY_DOMAIN: any;
-  private session_id: any;
-  private inputUrl: any;
+    private LOGGLY_INPUT_PREFIX: any;
+    private LOGGLY_COLLECTOR_DOMAIN: any;
+    private LOGGLY_SESSION_KEY: any;
+    private LOGGLY_SESSION_KEY_LENGTH: any;
+    private LOGGLY_PROXY_DOMAIN: any;
+    private session_id: any;
+    private inputUrl: any;
 
-  constructor(private _http: HttpClient) {
-      this.LOGGLY_INPUT_PREFIX = 'http' + ( ('https:' === document.location.protocol ? 's' : '') ) + '://';
-      this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
-      this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
-      this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
-      this.LOGGLY_PROXY_DOMAIN = 'loggly';
-  }
+    constructor(private _http: HttpClient) {
+        this.LOGGLY_INPUT_PREFIX = 'http' + (('https:' === document.location.protocol ? 's' : '')) + '://';
+        this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
+        this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
+        this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
+        this.LOGGLY_PROXY_DOMAIN = 'loggly';
+    }
+
+    setProtocol(protocol) {
+        this.LOGGLY_INPUT_PREFIX = protocol;
+    }
 
     uuid() {
         // lifted from here -> http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523
@@ -161,7 +164,7 @@ export class LogglyService {
     track(data: any) {
         // inject session id
         data.sessionId = this.session_id;
-        return this._http.post<any>(this.inputUrl, data, { headers: new HttpHeaders().set('Content-Type', 'text/plain') });
+        return this._http.post<any>(this.inputUrl, data, {headers: new HttpHeaders().set('Content-Type', 'text/plain')});
     }
 
     readCookie(): any {
