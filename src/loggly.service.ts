@@ -13,7 +13,7 @@ export class LogglyService {
     private inputUrl: any;
 
     constructor(private _http: HttpClient) {
-        this.LOGGLY_INPUT_PREFIX = '://';
+        this.LOGGLY_INPUT_PREFIX = 'https://';
         this.LOGGLY_COLLECTOR_DOMAIN = 'logs-01.loggly.com';
         this.LOGGLY_SESSION_KEY = 'logglytrackingsession';
         this.LOGGLY_SESSION_KEY_LENGTH = this.LOGGLY_SESSION_KEY + 1;
