@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Cookie } from 'ng2-cookies';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class LogglyService {
     private LOGGLY_INPUT_PREFIX: any;
     private LOGGLY_COLLECTOR_DOMAIN: any;
@@ -20,7 +22,7 @@ export class LogglyService {
         this.LOGGLY_PROXY_DOMAIN = 'loggly';
     }
 
-    setProtocol(protocol) {
+    setProtocol(protocol: string) {
         this.LOGGLY_INPUT_PREFIX = protocol;
     }
 
@@ -54,19 +56,20 @@ export class LogglyService {
         if (tracker.sendConsoleErrors === true) {
             let _onerror = window.onerror;
             // send console error messages to Loggly
-            window.onerror = function (msg, url, line, col) {
+            window.onerror = function (event: string | Event, source?: string, lineno?: number, colno?: number, error?: Error) {
                 tracker.push({
                     category: 'BrowserJsException',
                     exception: {
-                        message: msg,
-                        url: url,
-                        lineno: line,
-                        colno: col,
+                        message: event instanceof Error ? event.message : event.toString(),
+                        url: source,
+                        lineno: lineno,
+                        colno: colno,
+                        error: error
                     }
                 });
 
                 if (_onerror && typeof _onerror === 'function') {
-                    _onerror.apply(window, arguments);
+                    _onerror.apply(window, arguments as any);
                 }
             };
         }

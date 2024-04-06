@@ -9,9 +9,7 @@ export * from './loggly.service';
   imports: [
     CommonModule,
     HttpClientModule
-  ],
-  declarations: [],
-  exports: []
+  ]
 })
 export class NgxLogglyModule {
   static forRoot(): ModuleWithProviders<NgxLogglyModule> {

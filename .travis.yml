@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - node
-- '10'
+- '20'
 script: yarn build
 cache:
   yarn: true
