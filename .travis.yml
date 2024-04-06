@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - node
 - '20'
-dist: xenial
+dist: focal
 script: yarn build
 cache:
   yarn: true
